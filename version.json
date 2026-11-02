@@ -1,5 +1,5 @@
 {
-  "version": "2.3.2",
+  "version": "2.3.3",
   "updated": "2026-11-03",
-  "notes": "English timer labels and in-app version check."
+  "notes": "Compact layout, bilingual difficulty controls, and zoom/scroll restrictions."
 }
