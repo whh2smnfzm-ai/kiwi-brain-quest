@@ -1,5 +1,5 @@
 {
-  "version": "2.3.5",
+  "version": "2.3.6",
   "updated": "2026-11-03",
-  "notes": "English question bank, refreshed version label, expanded safe-area layout, and manual next-question control in Normal mode."
+  "notes": "Bilingual question and answer content, version display refresh, expanded safe-area spacing, and manual next button in Normal mode."
 }
