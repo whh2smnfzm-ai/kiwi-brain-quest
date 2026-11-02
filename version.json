@@ -1,5 +1,5 @@
 {
-  "version": "2.3.3",
+  "version": "2.3.4",
   "updated": "2026-11-03",
-  "notes": "Compact layout, bilingual difficulty controls, and zoom/scroll restrictions."
+  "notes": "Top safe-area spacing, normal-mode timer cleanup, localized Start label, and clearer speed controls."
 }
