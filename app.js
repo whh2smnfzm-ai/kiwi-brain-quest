@@ -2,8 +2,8 @@
 "use strict";
 const $ = id => document.getElementById(id);
 const i18n = {
- ko:{year:"학년 선택",category:"학습 영역",all:"전체 영역 섞기",number:"수와 연산",algebra:"대수와 패턴",measure:"측정",geometry:"기하와 공간",statistics:"통계와 자료",probability:"확률",mode:"게임 모드",normal:"일반 모드",speed:"스피드 모드",timerDifficulty:"시간 제한 난이도",timerHint:"시간 제한은 문제의 수학 난이도와 별개입니다.",help:"일반 모드 10문제 · 스피드 모드 무제한",progress:"문제",score:"점수",time:"남은 시간",adjustTitle:"다음 문제 난이도 조절",adjustHint:"현재 문제는 유지되고 다음 문제부터 적용됩니다.",easy:"쉬움",medium:"보통",hard:"어려움",pause:"일시정지",resume:"계속하기",pauseText:"⏸ 타이머 정지 중",pauseHint:"문제는 그대로 보여요. 계속 풀어도 됩니다.",exit:"그만하기",question:"문제를 풀어보세요!",correct:"정답입니다! 🎉",wrong:"정답은 ",timeout:"시간이 끝났어요. 풀이를 확인해 보세요.",explain:"풀이 방법",result:"게임 종료!",again:"다시 시작",answered:"푼 문제",correctCount:"정답",accuracy:"정답률",language:"🇳🇿",timerEasy:"쉬움 · 15초",timerMedium:"보통 · 10초",timerHard:"어려움 · 6초",sec:"초",versionLatest:"You’re using the latest version.",versionOld:"Update available: v",versionChecking:"Checking for updates...",versionUnknown:"Unable to check for updates."},
- en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Number",algebra:"Algebra & patterns",measure:"Measurement",geometry:"Geometry & space",statistics:"Statistics & data",probability:"Probability",mode:"Game mode",normal:"Normal mode",speed:"Speed mode",timerDifficulty:"Timer difficulty",timerHint:"Timer difficulty is separate from maths question difficulty.",help:"Normal: 10 questions · Speed: unlimited",progress:"Question",score:"Score",time:"Time left",adjustTitle:"Adjust next question difficulty",adjustHint:"Your current question stays the same. This applies to the next one.",easy:"Easy",medium:"Medium",hard:"Hard",pause:"Pause timer",resume:"Resume",pauseText:"⏸ Timer paused",pauseHint:"The question stays visible. You can keep solving it.",exit:"Quit",question:"Solve this question!",correct:"Correct! 🎉",wrong:"The answer is ",timeout:"Time is up. Take a look at the solution.",explain:"How to solve",result:"Game over!",again:"Play again",answered:"Questions answered",correctCount:"Correct",accuracy:"Accuracy",language:"🇰🇷",timerEasy:"Easy · 15 seconds",timerMedium:"Medium · 10 seconds",timerHard:"Hard · 6 seconds",sec:" seconds",versionLatest:"최신 버전입니다.",versionOld:"새 버전이 있어요: v",versionChecking:"최신 버전 확인 중...",versionUnknown:"최신 버전을 확인할 수 없습니다."}
+ ko:{year:"학년 선택",category:"학습 영역",all:"전체 영역 섞기",number:"수와 연산",algebra:"대수와 패턴",measure:"측정",geometry:"기하와 공간",statistics:"통계와 자료",probability:"확률",mode:"게임 모드",start:"시작",normal:"일반 모드",speed:"스피드 모드",timerDifficulty:"시간 제한 난이도",timerHint:"시간 제한은 문제의 수학 난이도와 별개입니다.",help:"일반 모드 10문제 · 스피드 모드 무제한",progress:"문제",score:"점수",time:"남은 시간",adjustTitle:"다음 문제 난이도 조절",adjustHint:"현재 문제는 유지되고 다음 문제부터 적용됩니다.",easy:"쉬움",medium:"보통",hard:"어려움",pause:"일시정지",resume:"계속하기",pauseText:"⏸ 타이머 정지 중",pauseHint:"문제는 그대로 보여요. 계속 풀어도 됩니다.",exit:"그만하기",question:"문제를 풀어보세요!",correct:"정답입니다! 🎉",wrong:"정답은 ",timeout:"시간이 끝났어요. 풀이를 확인해 보세요.",explain:"풀이 방법",result:"게임 종료!",again:"다시 시작",answered:"푼 문제",correctCount:"정답",accuracy:"정답률",language:"🇳🇿",timerEasy:"쉬움 · 15초",timerMedium:"보통 · 10초",timerHard:"어려움 · 6초",sec:"초",versionLatest:"You’re using the latest version.",versionOld:"Update available: v",versionChecking:"Checking for updates...",versionUnknown:"Unable to check for updates."},
+ en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Number",algebra:"Algebra & patterns",measure:"Measurement",geometry:"Geometry & space",statistics:"Statistics & data",probability:"Probability",mode:"Game mode",start:"Start",normal:"Normal mode",speed:"Speed mode",timerDifficulty:"Timer difficulty",timerHint:"Timer difficulty is separate from maths question difficulty.",help:"Normal: 10 questions · Speed: unlimited",progress:"Question",score:"Score",time:"Time left",adjustTitle:"Adjust next question difficulty",adjustHint:"Your current question stays the same. This applies to the next one.",easy:"Easy",medium:"Medium",hard:"Hard",pause:"Pause timer",resume:"Resume",pauseText:"⏸ Timer paused",pauseHint:"The question stays visible. You can keep solving it.",exit:"Quit",question:"Solve this question!",correct:"Correct! 🎉",wrong:"The answer is ",timeout:"Time is up. Take a look at the solution.",explain:"How to solve",result:"Game over!",again:"Play again",answered:"Questions answered",correctCount:"Correct",accuracy:"Accuracy",language:"🇰🇷",timerEasy:"Easy · 15s",timerMedium:"Medium · 10s",timerHard:"Hard · 6s",sec:" seconds",versionLatest:"최신 버전입니다.",versionOld:"새 버전이 있어요: v",versionChecking:"최신 버전 확인 중...",versionUnknown:"최신 버전을 확인할 수 없습니다."}
 };
 const strands=["number","algebra","measure","geometry","statistics","probability"];
 const bank={
@@ -64,7 +64,7 @@ const bank={
 let lang="ko",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,queue=[],current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,selected="all";
 const tr=k=>i18n[lang][k]||k, label=s=>tr(s);
 
-const APP_VERSION="2.3.3";
+const APP_VERSION="2.3.4";
 function compareVersions(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkLatestVersion(){const el=$("versionStatus");if(!el)return;el.textContent=tr("versionChecking");try{const response=await fetch("version.json?check="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("version check failed");const data=await response.json();el.textContent=compareVersions(APP_VERSION,data.version)>=0?tr("versionLatest"):tr("versionOld")+data.version;}catch(e){el.textContent=tr("versionUnknown");}}
 function updateText(){
@@ -81,8 +81,12 @@ function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.fl
 function buildQueue(){const year=+$("year").value;selected=$("category").value;const data=bank[year].filter(x=>selected==="all"||x[0]===selected);queue=shuffle(data);if(mode==="speed"&&queue.length)queue=queue.concat(shuffle(data));}
 function nextQ(){if(!queue.length){finish();return;}if(mode==="speed"&&answered>=queue.length){queue=shuffle(queue);}if(mode==="normal"&&answered>=10){finish();return;}if(mode==="speed"&&answered>0&&answered%queue.length===0)queue=shuffle(queue);const item=queue[answered%queue.length];current=makeQuestion(item);renderQuestion();}
 function makeQuestion(item){
- const [s,qko,a,opts,eko,een]=item;let qtext=qko;
- if(typeof opts==="string"){return {s,qko,a,opts,eko,een};}
+ let s,qko,a,opts,eko,een;
+ if(item.length>=8){[s,qko,,,a,opts,eko,een]=item;}
+ else{[s,qko,a,opts,eko,een]=item;}
+ if(!Array.isArray(opts)){opts=[a];}
+ opts=[...new Set(opts)];
+ if(!opts.some(x=>String(x)===String(a)))opts.unshift(a);
  return {s,qko,a,opts,eko,een};
 }
 function renderQuestion(){
