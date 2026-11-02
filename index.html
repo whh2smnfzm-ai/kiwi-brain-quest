@@ -10,7 +10,7 @@
 <body>
 <main class="app">
   <header class="top">
-    <div class="brand"><h1>🥝 Kiwi Brain Quest <span class="app-version">v2.3.6</span></h1><small id="versionStatus" aria-live="polite">최신 버전 확인 중...</small></div>
+    <div class="brand"><h1>🥝 Kiwi Brain Quest <span class="app-version">v2.3.7</span></h1><small id="versionStatus" aria-live="polite">최신 버전 확인 중...</small></div>
     <button id="langBtn" class="secondary language-toggle" type="button" aria-label="Switch language" title="Switch language">🇳🇿</button>
   </header>
 
@@ -64,15 +64,12 @@
       <button id="easier" class="secondary">더 쉽게</button>
       <button id="harder" class="secondary">더 어렵게</button>
     </div>
-    <div id="pauseBanner" class="panel pause hidden">
-      <div><strong data-i18n="pauseText">⏸ 타이머 정지 중</strong><p class="hint" data-i18n="pauseHint">문제는 그대로 보여요. 계속 풀어도 됩니다.</p></div>
-      <button id="resumeBtn" class="primary">계속하기</button>
-    </div>
     <div class="panel question-panel">
       <small id="strandName">수와 연산</small>
       <div id="question" class="question">7 + 5 = ?</div>
     </div>
     <div id="choices" class="choices"></div>
+    <div id="speedAnswer" class="speed-answer hidden"><input id="speedInput" type="text" autocomplete="off" placeholder="정답 입력"><button id="speedSubmit" class="primary">답 제출</button></div>
     <div id="feedback" class="panel hidden" aria-live="polite"></div>
     <div class="two">
       <button id="pauseBtn" class="secondary hidden">일시정지</button>
@@ -88,6 +85,6 @@
     <button id="againBtn" class="primary">다시 시작</button>
   </section>
 </main>
-<script src="app.js?v=2.3.6"></script>
+<script src="app.js?v=2.3.7"></script>
 </body>
 </html>
