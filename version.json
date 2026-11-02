@@ -1,5 +1,5 @@
 {
-  "version": "2.3.4",
+  "version": "2.3.5",
   "updated": "2026-11-03",
-  "notes": "Top safe-area spacing, normal-mode timer cleanup, localized Start label, and clearer speed controls."
+  "notes": "English question bank, refreshed version label, expanded safe-area layout, and manual next-question control in Normal mode."
 }
