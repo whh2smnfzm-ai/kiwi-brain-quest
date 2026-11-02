@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#147d68">
+<title>Kiwi Brain Quest</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div><h1>🥝 Kiwi Brain Quest</h1><p>Version 2.3.0 · New Zealand curriculum-inspired practice</p></div>
+    <button id="langBtn" class="secondary">English</button>
+  </header>
+
+  <section id="setup" class="panel stack">
+    <label><span data-i18n="year">학년 선택</span>
+      <select id="year">
+        <option value="1">Year 1</option><option value="2">Year 2</option>
+        <option value="3">Year 3</option><option value="4">Year 4</option>
+        <option value="5">Year 5</option><option value="6">Year 6</option>
+      </select>
+    </label>
+    <label><span data-i18n="category">학습 영역</span>
+      <select id="category">
+        <option value="all" data-i18n="all">전체 영역 섞기</option>
+        <option value="number" data-i18n="number">수와 연산</option>
+        <option value="algebra" data-i18n="algebra">대수와 패턴</option>
+        <option value="measure" data-i18n="measure">측정</option>
+        <option value="geometry" data-i18n="geometry">기하와 공간</option>
+        <option value="statistics" data-i18n="statistics">통계와 자료</option>
+        <option value="probability" data-i18n="probability">확률</option>
+      </select>
+    </label>
+    <div>
+      <strong data-i18n="mode">게임 모드</strong>
+      <div class="two">
+        <button id="normalBtn" class="primary">일반 모드</button>
+        <button id="speedBtn" class="secondary">스피드 모드</button>
+      </div>
+    </div>
+    <div id="timerSettings" class="hidden">
+      <strong data-i18n="timerDifficulty">시간 제한 난이도</strong>
+      <div class="three">
+        <button data-time="0" class="secondary">Easy · 15초</button>
+        <button data-time="1" class="primary">Medium · 10초</button>
+        <button data-time="2" class="secondary">Hard · 6초</button>
+      </div>
+      <p class="hint" data-i18n="timerHint">시간 제한은 문제의 수학 난이도와 별개입니다.</p>
+    </div>
+    <button id="startBtn" class="primary start">게임 시작</button>
+    <p class="hint" data-i18n="help">일반 모드 10문제 · 스피드 모드 무제한</p>
+  </section>
+
+  <section id="game" class="stack hidden">
+    <div class="panel stats">
+      <div><small data-i18n="progress">문제</small><strong id="progress">1 / 10</strong></div>
+      <div><small data-i18n="score">점수</small><strong id="score">0</strong></div>
+      <div id="timerBox"><small data-i18n="time">남은 시간</small><strong id="timer">10</strong></div>
+    </div>
+    <div id="timerBar" class="bar"><div id="timerFill"></div></div>
+    <div id="adjustPanel" class="panel hidden">
+      <small data-i18n="adjustTitle">다음 문제 난이도 조절</small>
+      <div class="adjust-row">
+        <button id="easier" class="secondary">− 쉽게</button>
+        <strong id="questionDifficulty">보통</strong>
+        <button id="harder" class="secondary">+ 어렵게</button>
+      </div>
+      <p class="hint" data-i18n="adjustHint">현재 문제는 유지되고 다음 문제부터 적용됩니다.</p>
+    </div>
+    <div id="pauseBanner" class="panel pause hidden">
+      <div><strong data-i18n="pauseText">⏸ 타이머 정지 중</strong><p class="hint" data-i18n="pauseHint">문제는 그대로 보여요. 계속 풀어도 됩니다.</p></div>
+      <button id="resumeBtn" class="primary">계속하기</button>
+    </div>
+    <div class="panel question-panel">
+      <small id="strandName">수와 연산</small>
+      <div id="question" class="question">7 + 5 = ?</div>
+    </div>
+    <div id="choices" class="choices"></div>
+    <div id="feedback" class="panel hidden" aria-live="polite"></div>
+    <div class="two">
+      <button id="pauseBtn" class="secondary hidden">일시정지</button>
+      <button id="exitBtn" class="secondary">그만하기</button>
+    </div>
+  </section>
+
+  <section id="result" class="panel stack hidden">
+    <h2 data-i18n="result">게임 종료!</h2>
+    <div id="finalScore" class="final-score">0 pts</div>
+    <p id="resultDetail" class="hint"></p>
+    <button id="againBtn" class="primary">다시 시작</button>
+  </section>
+  <footer>Practice resource · Check your school's current NZ Curriculum learning expectations.</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
