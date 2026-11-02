@@ -7,12 +7,7 @@ Open `index.html` in a modern browser. No build tools or dependencies are requir
 
 ## Publish with GitHub Pages
 1. Create a new GitHub repository (for example, `kiwi-brain-quest`).
-2. Extract this ZIP file.
-3. Upload `index.html`, `style.css`, `app.js`, and this `README.md` to the repository root.
-4. In the repository, open **Settings → Pages**.
-5. Under **Build and deployment**, select **Deploy from a branch**.
-6. Choose the `main` branch and `/ (root)`, then save.
-7. Wait for GitHub Pages to publish the site. The URL will appear in the Pages settings.
+2. In the repository, open **Settings → Pages**. Under **Build and deployment**, select **Deploy from a branch**, choose the `main` branch and `/ (root)`, then save. The URL will appear in the Pages settings after deployment.
 
 ## Features
 - Year 1–6 selection
