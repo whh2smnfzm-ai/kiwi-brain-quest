@@ -1,5 +1,5 @@
 {
-  "version": "2.3.6",
+  "version": "2.3.7",
   "updated": "2026-11-03",
-  "notes": "Bilingual question and answer content, version display refresh, expanded safe-area spacing, and manual next button in Normal mode."
+  "notes": "Clear answer/explanation labels, persistent feedback on language switch, clean speed pause control, speed typed answers, varied generated questions and working difficulty levels."
 }
