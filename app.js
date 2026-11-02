@@ -64,18 +64,18 @@ const bank={
 let lang="ko",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,queue=[],current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,selected="all";
 const tr=k=>i18n[lang][k]||k, label=s=>tr(s);
 
-const APP_VERSION="2.3.2";
+const APP_VERSION="2.3.3";
 function compareVersions(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkLatestVersion(){const el=$("versionStatus");if(!el)return;el.textContent=tr("versionChecking");try{const response=await fetch("version.json?check="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("version check failed");const data=await response.json();el.textContent=compareVersions(APP_VERSION,data.version)>=0?tr("versionLatest"):tr("versionOld")+data.version;}catch(e){el.textContent=tr("versionUnknown");}}
 function updateText(){
  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;el.textContent=tr(key)});
  $("langBtn").textContent=tr("language");$("langBtn").setAttribute("aria-label",lang==="ko"?"Switch to English":"한국어로 변경");$("langBtn").title=lang==="ko"?"Switch to English":"한국어로 변경";$("normalBtn").textContent=tr("normal");$("speedBtn").textContent=tr("speed");
  $("startBtn").textContent=tr("start");$("pauseBtn").textContent=tr("pause");$("resumeBtn").textContent=tr("resume");$("exitBtn").textContent=tr("exit");$("againBtn").textContent=tr("again");
- $("adjustTitle").textContent=tr("adjustTitle");$("adjustHint").textContent=tr("adjustHint");$("easier").textContent="− "+tr("easy");$("harder").textContent="+ "+tr("hard");
+ $("easier").textContent=lang==="ko"?"더 쉽게":"Easier";$("harder").textContent=lang==="ko"?"더 어렵게":"Harder";
  document.querySelectorAll("[data-time]").forEach(b=>{const n=+b.dataset.time;b.textContent=tr(["timerEasy","timerMedium","timerHard"][n]);b.classList.toggle("primary",n===timerLevel);});
  updateDifficulty();
 }
-function updateDifficulty(){$("questionDifficulty").textContent=tr(["easy","medium","hard"][questionLevel]);$("easier").disabled=questionLevel===0;$("harder").disabled=questionLevel===2;}
+function updateDifficulty(){$("easier").disabled=questionLevel===0;$("harder").disabled=questionLevel===2;}
 function setMode(m){mode=m;$("normalBtn").classList.toggle("primary",m==="normal");$("speedBtn").classList.toggle("primary",m==="speed");$("timerSettings").classList.toggle("hidden",m!=="speed");}
 function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;}
 function buildQueue(){const year=+$("year").value;selected=$("category").value;const data=bank[year].filter(x=>selected==="all"||x[0]===selected);queue=shuffle(data);if(mode==="speed"&&queue.length)queue=queue.concat(shuffle(data));}
