@@ -64,7 +64,7 @@ const bank={
 let lang="ko",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,queue=[],current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,selected="all";
 const tr=k=>i18n[lang][k]||k, label=s=>tr(s);
 
-const APP_VERSION="2.3.5";
+const APP_VERSION="2.3.6";
 function compareVersions(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){const d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkLatestVersion(){const badge=document.querySelector(".app-version");if(badge)badge.textContent="v"+APP_VERSION;const el=$("versionStatus");if(!el)return;el.textContent=tr("versionChecking");try{const response=await fetch("version.json?check="+Date.now(),{cache:"no-store"});if(!response.ok)throw new Error("version check failed");const data=await response.json();el.textContent=compareVersions(APP_VERSION,data.version)>=0?tr("versionLatest"):tr("versionOld")+data.version;}catch(e){el.textContent=tr("versionUnknown");}}
 function updateText(){
@@ -162,7 +162,7 @@ function answer(choice,button,timedOut){
  [...$("choices").children].forEach(b=>{b.disabled=true;if(String(b.textContent)===String(correctAnswer))b.classList.add("correct");});
  $("score").textContent=score;$("progress").textContent=mode==="speed"?answered:`${answered} / 10`;
  const feedback=$("feedback");feedback.classList.remove("hidden");const explanation=lang==="ko"?current.eko:current.eenText;
- feedback.innerHTML=`<div class="feedback-title">${timedOut?"⏱ "+tr("timeout"):right?tr("correct"):tr("wrong")+current.a}</div><div class="solution"><b>${tr("explain")}: ${correctAnswer}</b><br>${explanation}</div>`;
+ feedback.innerHTML=`<div class="feedback-title">${timedOut?"⏱ "+tr("timeout"):right?tr("correct"):tr("wrong")+correctAnswer}</div><div class="solution"><b>${tr("explain")}: ${correctAnswer}</b><br>${explanation}</div>`;
  if(mode==="normal"){$("nextBtn").disabled=false;}else{nextTimer=setTimeout(()=>nextQ(),timedOut?6500:3500);}
 }
 function pause(){if(mode!=="speed"||paused||locked)return;paused=true;remaining=Math.max(1,Math.ceil((deadline-Date.now())/1000));clearInterval(tick);$("pauseBanner").classList.remove("hidden");$("pauseBtn").textContent=tr("resume");}
