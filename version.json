@@ -1,5 +1,5 @@
 {
-  "version": "2.3.8",
+  "version": "2.3.9",
   "updated": "2026-11-03",
-  "notes": "Bilingual speed mode, mental solving, worked explanations, and pause progress preservation."
+  "notes": "English-only interface, next-question control in speed mode, line-by-line solutions, red final-three-second countdown and audible countdown beeps."
 }
