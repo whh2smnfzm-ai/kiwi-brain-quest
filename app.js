@@ -7,7 +7,7 @@ en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Numbe
 };
 const $tr=k=>i18n[lang][k]||k;
 let lang="ko",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,seen=new Set();
-const APP_VERSION="2.3.7";
+const APP_VERSION="2.3.8";
 function compare(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){let d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkVersion(){const badge=document.querySelector(".app-version");if(badge)badge.textContent="v"+APP_VERSION;const el=$("versionStatus");el.textContent=$tr("versionChecking");try{const r=await fetch("version.json?check="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const v=await r.json();el.textContent=compare(APP_VERSION,v.version)>=0?$tr("versionLatest"):$tr("versionOld")+v.version;}catch(e){el.textContent=$tr("versionUnknown");}}
 function updateText(){
