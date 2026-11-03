@@ -2,8 +2,8 @@
 "use strict";
 const $=id=>document.getElementById(id);
 const i18n={
-ko:{year:"학년 선택",category:"학습 영역",all:"전체 영역 섞기",number:"수와 연산",algebra:"대수와 패턴",measure:"측정",geometry:"기하와 공간",statistics:"통계와 자료",probability:"확률",mode:"게임 모드",start:"시작",normal:"일반 모드",speed:"스피드 모드",timerDifficulty:"시간 제한 난이도",timerHint:"시간 제한은 문제의 수학 난이도와 별개입니다.",help:"일반 모드 10문제 · 스피드 모드 무제한",progress:"문제",score:"점수",time:"남은 시간",pause:"일시정지",resume:"계속하기",next:"다음 문제",exit:"그만하기",question:"문제를 풀어보세요!",correct:"정답입니다! 🎉",wrong:"아쉬워요. 정답은 ",timeout:"시간이 끝났어요. 정답과 풀이를 확인해 보세요.",answer:"정답",explain:"풀이 방법",submit:"답 제출",placeholder:"정답 입력",result:"게임 종료!",again:"다시 시작",answered:"푼 문제",correctCount:"정답",accuracy:"정답률",language:"🇳🇿",timerEasy:"쉬움 · 15초",timerMedium:"보통 · 10초",timerHard:"어려움 · 6초",versionLatest:"최신 버전입니다.",versionOld:"새 버전이 있어요: v",versionChecking:"최신 버전 확인 중...",versionUnknown:"최신 버전을 확인할 수 없습니다."},
-en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Number",algebra:"Algebra & patterns",measure:"Measurement",geometry:"Geometry & space",statistics:"Statistics & data",probability:"Probability",mode:"Game mode",start:"Start",normal:"Normal mode",speed:"Speed mode",timerDifficulty:"Timer difficulty",timerHint:"Timer difficulty is separate from maths question difficulty.",help:"Normal: 10 questions · Speed: unlimited",progress:"Question",score:"Score",time:"Time left",pause:"Pause",resume:"Resume",next:"Next question",exit:"Quit",question:"Solve this question!",correct:"Correct! 🎉",wrong:"Not quite. The answer is ",timeout:"Time is up. Check the answer and solution.",answer:"Answer",explain:"How to solve",submit:"Submit",placeholder:"Type your answer",result:"Game over!",again:"Play again",answered:"Questions answered",correctCount:"Correct",accuracy:"Accuracy",language:"🇰🇷",timerEasy:"Easy · 15s",timerMedium:"Medium · 10s",timerHard:"Hard · 6s",versionLatest:"You’re using the latest version.",versionOld:"Update available: v",versionChecking:"Checking for updates...",versionUnknown:"Unable to check for updates."}
+ko:{year:"학년 선택",category:"학습 영역",all:"전체 영역 섞기",number:"수와 연산",algebra:"대수와 패턴",measure:"측정",geometry:"기하와 공간",statistics:"통계와 자료",probability:"확률",mode:"게임 모드",start:"시작",normal:"일반 모드",speed:"스피드 모드",timerDifficulty:"시간 제한 난이도",timerHint:"시간 제한은 문제의 수학 난이도와 별개입니다.",easier:"더 쉽게",harder:"더 어렵게",help:"일반 모드 10문제 · 스피드 모드 무제한",progress:"문제",score:"점수",time:"남은 시간",pause:"일시정지",resume:"계속하기",next:"다음 문제",exit:"그만하기",question:"문제를 풀어보세요!",correct:"정답입니다! 🎉",wrong:"아쉬워요. 정답은 ",timeout:"",answer:"정답",explain:"풀이 방법",submit:"답 제출",placeholder:"정답 입력",result:"게임 종료!",again:"다시 시작",answered:"푼 문제",correctCount:"정답",accuracy:"정답률",language:"🇳🇿",timerEasy:"쉬움 · 15초",timerMedium:"보통 · 10초",timerHard:"어려움 · 6초",versionLatest:"최신 버전입니다.",versionOld:"새 버전이 있어요: v",versionChecking:"최신 버전 확인 중...",versionUnknown:"최신 버전을 확인할 수 없습니다."},
+en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Number",algebra:"Algebra & patterns",measure:"Measurement",geometry:"Geometry & space",statistics:"Statistics & data",probability:"Probability",mode:"Game mode",start:"Start",normal:"Normal mode",speed:"Speed mode",timerDifficulty:"Timer difficulty",timerHint:"Timer difficulty is separate from maths question difficulty.",easier:"Easier",harder:"Harder",help:"Normal: 10 questions · Speed: unlimited",progress:"Question",score:"Score",time:"Time left",pause:"Pause",resume:"Resume",next:"Next question",exit:"Quit",question:"Solve this question!",correct:"Correct! 🎉",wrong:"Not quite. The answer is ",timeout:"",answer:"Answer",explain:"How to solve",submit:"Submit",placeholder:"Type your answer",result:"Game over!",again:"Play again",answered:"Questions answered",correctCount:"Correct",accuracy:"Accuracy",language:"🇰🇷",timerEasy:"Easy · 15s",timerMedium:"Medium · 10s",timerHard:"Hard · 6s",versionLatest:"You’re using the latest version.",versionOld:"Update available: v",versionChecking:"Checking for updates...",versionUnknown:"Unable to check for updates."}
 };
 const $tr=k=>i18n[lang][k]||k;
 let lang="ko",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,seen=new Set();
@@ -12,7 +12,7 @@ function compare(a,b){const x=String(a).split(".").map(Number),y=String(b).split
 async function checkVersion(){const badge=document.querySelector(".app-version");if(badge)badge.textContent="v"+APP_VERSION;const el=$("versionStatus");el.textContent=$tr("versionChecking");try{const r=await fetch("version.json?check="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const v=await r.json();el.textContent=compare(APP_VERSION,v.version)>=0?$tr("versionLatest"):$tr("versionOld")+v.version;}catch(e){el.textContent=$tr("versionUnknown");}}
 function updateText(){
 document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=$tr(e.dataset.i18n));
-$("langBtn").textContent=$tr("language");$("normalBtn").textContent=$tr("normal");$("speedBtn").textContent=$tr("speed");$("startBtn").textContent=$tr("start");$("pauseBtn").textContent=paused?$tr("resume"):$tr("pause");$("exitBtn").textContent=$tr("exit");$("nextBtn").textContent=$tr("next");$("againBtn").textContent=$tr("again");$("speedSubmit").textContent=$tr("submit");$("speedInput").placeholder=$tr("placeholder");
+$("langBtn").textContent=$tr("language");$("normalBtn").textContent=$tr("normal");$("speedBtn").textContent=$tr("speed");$("startBtn").textContent=$tr("start");$("pauseBtn").textContent=paused?$tr("resume"):$tr("pause");$("exitBtn").textContent=$tr("exit");$("nextBtn").textContent=$tr("next");$("againBtn").textContent=$tr("again");
 document.querySelectorAll("[data-time]").forEach(b=>{b.textContent=$tr(["timerEasy","timerMedium","timerHard"][+b.dataset.time]);b.classList.toggle("primary",+b.dataset.time===timerLevel);});
 if(current)renderCurrentText();
 }
@@ -51,13 +51,13 @@ if(locked){renderFeedback();}
 function renderFeedback(){
 const right=current.wasRight,timeout=current.timedOut;
 $("feedback").classList.remove("hidden");
-const title=timeout?"⏱ "+$tr("timeout"):right?$tr("correct"):$tr("wrong")+current.a;
+const title=timeout?"":right?$tr("correct"):$tr("wrong")+current.a;
 const explain=lang==="ko"?current.eko:current.een;
 $("feedback").innerHTML=`<div class="feedback-title">${title}</div><div class="solution"><b>${$tr("answer")}: ${current.a}</b><br><b>${$tr("explain")}:</b> ${explain}</div>`;
 }
 function renderQuestion(){
-locked=false;$("feedback").classList.add("hidden");$("nextBtn").disabled=true;$("speedInput").value="";
-$("choices").innerHTML="";$("choices").classList.toggle("hidden",mode==="speed");$("speedAnswer").classList.toggle("hidden",mode!=="speed");
+locked=false;$("feedback").classList.add("hidden");$("nextBtn").disabled=true;
+$("choices").innerHTML="";$("choices").classList.toggle("hidden",mode==="speed");
 renderCurrentText();$("progress").textContent=mode==="speed"?answered+1:`${answered+1} / 10`;
 if(mode==="normal"){shuffle(current.options).forEach(opt=>{const b=document.createElement("button");b.className="choice";b.textContent=opt;b.addEventListener("click",()=>answer(opt,b,false));$("choices").append(b);});}
 if(mode==="speed"&&!paused)startClock([15,10,6][timerLevel]);
@@ -65,7 +65,8 @@ if(mode==="speed"&&!paused)startClock([15,10,6][timerLevel]);
 function shuffle(a){let x=[...a];for(let i=x.length-1;i>0;i--){let j=rand(i+1);[x[i],x[j]]=[x[j],x[i]];}return x;}
 function nextQ(){if(mode==="normal"&&answered>=10){finish();return;}current=makeGenerated();renderQuestion();}
 function buildQueue(){seen.clear();current=null;}
-function startClock(sec){clearInterval(tick);remaining=sec;deadline=Date.now()+sec*1000;$("timer").textContent=sec;$("timerFill").style.width="100%";tick=setInterval(()=>{if(paused||locked)return;let ms=Math.max(0,deadline-Date.now()),left=Math.ceil(ms/1000);$("timer").textContent=left;$("timerFill").style.width=(ms/(sec*1000)*100)+"%";if(left<=3&&left>0&&left!==remaining){remaining=left;tone(880,.15,.14);}if(ms<=0){clearInterval(tick);tone(180,.8,.22);answer(null,null,true);}},60);}
+let clockTotalMs=0,clockRemainingMs=0;
+function startClock(sec,resuming=false){clearInterval(tick);if(!resuming){clockTotalMs=sec*1000;clockRemainingMs=clockTotalMs;}deadline=Date.now()+clockRemainingMs;$("timer").textContent=Math.ceil(clockRemainingMs/1000);$("timerFill").style.width=(clockRemainingMs/clockTotalMs*100)+"%";tick=setInterval(()=>{if(paused||locked)return;let ms=Math.max(0,deadline-Date.now()),left=Math.ceil(ms/1000);clockRemainingMs=ms;$("timer").textContent=left;$("timerFill").style.width=(ms/clockTotalMs*100)+"%";if(left<=3&&left>0&&left!==remaining){remaining=left;tone(880,.15,.14);}if(ms<=0){clearInterval(tick);clockRemainingMs=0;tone(180,.8,.22);answer(null,null,true);}},60);}
 function tone(freq,duration,volume){try{if(!audio)return;if(audio.state==="suspended")audio.resume();let t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();o.frequency.value=freq;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(volume,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+duration);o.connect(g);g.connect(audio.destination);o.start(t);o.stop(t+duration+.02);}catch(e){}}
 function initAudio(){try{let C=window.AudioContext||window.webkitAudioContext;if(C){audio=audio||new C();if(audio.state==="suspended")audio.resume();}}catch(e){}}
 function answer(choice,button,timedOut){
@@ -77,8 +78,8 @@ if(right){score+=10;correct++;button?.classList.add("correct");}else button?.cla
 $("score").textContent=score;$("progress").textContent=mode==="speed"?answered:`${answered} / 10`;renderFeedback();
 if(mode==="normal")$("nextBtn").disabled=false;else nextTimer=setTimeout(()=>nextQ(),timedOut?6000:3000);
 }
-function pause(){if(mode!=="speed"||paused||locked)return;paused=true;remaining=Math.max(1,Math.ceil((deadline-Date.now())/1000));clearInterval(tick);$("pauseBtn").textContent=$tr("resume");}
-function resume(){if(!paused)return;paused=false;$("pauseBtn").textContent=$tr("pause");if(!locked)startClock(remaining);}
+function pause(){if(mode!=="speed"||paused||locked)return;paused=true;clockRemainingMs=Math.max(0,deadline-Date.now());remaining=Math.max(1,Math.ceil(clockRemainingMs/1000));clearInterval(tick);$("timer").textContent=remaining;$("timerFill").style.width=(clockRemainingMs/clockTotalMs*100)+"%";$("pauseBtn").textContent=$tr("resume");}
+function resume(){if(!paused)return;paused=false;$("pauseBtn").textContent=$tr("pause");if(!locked)startClock(clockRemainingMs/1000,true);}
 function finish(){clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("result").classList.remove("hidden");$("finalScore").textContent=score+" pts";let pct=answered?Math.round(correct/answered*100):0;$("resultDetail").textContent=`${$tr("answered")}: ${answered} · ${$tr("correctCount")}: ${correct} · ${$tr("accuracy")}: ${pct}%`;}
 function start(){clearInterval(tick);clearTimeout(nextTimer);initAudio();score=answered=correct=0;paused=false;questionLevel=1;buildQueue();$("setup").classList.add("hidden");$("result").classList.add("hidden");$("game").classList.remove("hidden");$("pauseBtn").classList.toggle("hidden",mode!=="speed");$("timerBox").classList.toggle("hidden",mode!=="speed");$("timerBar").classList.toggle("hidden",mode!=="speed");$("adjustPanel").classList.toggle("hidden",mode!=="speed");$("nextBtn").classList.toggle("hidden",mode!=="normal");$("nextBtn").disabled=true;$("score").textContent=0;nextQ();}
 function quit(){clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("setup").classList.remove("hidden");paused=false;}
@@ -86,10 +87,8 @@ $("langBtn").addEventListener("click",()=>{lang=lang==="ko"?"en":"ko";updateText
 $("normalBtn").addEventListener("click",()=>setMode("normal"));$("speedBtn").addEventListener("click",()=>setMode("speed"));
 document.querySelectorAll("[data-time]").forEach(b=>b.addEventListener("click",()=>{timerLevel=+b.dataset.time;updateText();}));
 $("easier").addEventListener("click",()=>{questionLevel=Math.max(0,questionLevel-1);updateDifficulty();});$("harder").addEventListener("click",()=>{questionLevel=Math.min(2,questionLevel+1);updateDifficulty();});
-function updateDifficulty(){$("easier").disabled=questionLevel===0;$("harder").disabled=questionLevel===2;}
+function updateDifficulty(){$("easier").disabled=questionLevel===0;$("harder").disabled=questionLevel===2;updateText();}
 $("startBtn").addEventListener("click",start);$("nextBtn").addEventListener("click",()=>{if(mode==="normal"&&locked){if(answered>=10)finish();else nextQ();}});
 $("pauseBtn").addEventListener("click",()=>paused?resume():pause());$("exitBtn").addEventListener("click",quit);$("againBtn").addEventListener("click",()=>{$("result").classList.add("hidden");$("setup").classList.remove("hidden");});
-$("speedSubmit").addEventListener("click",()=>{if(!$("speedInput").value.trim())return;answer($("speedInput").value.trim(),null,false);});
-$("speedInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("speedSubmit").click();});
 setMode("normal");updateText();checkVersion();
 })();
