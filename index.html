@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -10,80 +10,80 @@
 <body>
 <main class="app">
   <header class="top">
-    <div class="brand"><h1>🥝 Kiwi Brain Quest <span class="app-version">v2.3.8</span></h1><small id="versionStatus" aria-live="polite">최신 버전 확인 중...</small></div>
-    <button id="langBtn" class="secondary language-toggle" type="button" aria-label="Switch language" title="Switch language">🇳🇿</button>
+    <div class="brand"><h1>🥝 Kiwi Brain Quest <span class="app-version">v2.3.9</span></h1></div>
+   
   </header>
 
   <section id="setup" class="panel stack">
-    <label><span data-i18n="year">학년 선택</span>
+    <label><span>Choose year</span>
       <select id="year">
         <option value="1">Year 1</option><option value="2">Year 2</option>
         <option value="3">Year 3</option><option value="4">Year 4</option>
         <option value="5">Year 5</option><option value="6">Year 6</option>
       </select>
     </label>
-    <label><span data-i18n="category">학습 영역</span>
+    <label><span>Learning area</span>
       <select id="category">
-        <option value="all" data-i18n="all">전체 영역 섞기</option>
-        <option value="number" data-i18n="number">수와 연산</option>
-        <option value="algebra" data-i18n="algebra">대수와 패턴</option>
-        <option value="measure" data-i18n="measure">측정</option>
-        <option value="geometry" data-i18n="geometry">기하와 공간</option>
-        <option value="statistics" data-i18n="statistics">통계와 자료</option>
-        <option value="probability" data-i18n="probability">확률</option>
+        <option value="all">Mixed topics</option>
+        <option value="number">Number</option>
+        <option value="algebra">Algebra &amp; patterns</option>
+        <option value="measure">Measurement</option>
+        <option value="geometry">Geometry &amp; space</option>
+        <option value="statistics">Statistics &amp; data</option>
+        <option value="probability">Probability</option>
       </select>
     </label>
     <div>
-      <strong data-i18n="mode">게임 모드</strong>
+      <strong>Game mode</strong>
       <div class="two">
-        <button id="normalBtn" class="primary">일반 모드</button>
-        <button id="speedBtn" class="secondary">스피드 모드</button>
+        <button id="normalBtn" class="primary">Normal mode</button>
+        <button id="speedBtn" class="secondary">Speed mode</button>
       </div>
     </div>
     <div id="timerSettings" class="hidden">
-      <strong data-i18n="timerDifficulty">시간 제한 난이도</strong>
+      <strong>Timer difficulty</strong>
       <div class="three">
         <button data-time="0" class="secondary">Easy · 15 seconds</button>
         <button data-time="1" class="primary">Medium · 10 seconds</button>
         <button data-time="2" class="secondary">Hard · 6 seconds</button>
       </div>
-      <p class="hint" data-i18n="timerHint">시간 제한은 문제의 수학 난이도와 별개입니다.</p>
+      <p class="hint">Timer difficulty is separate from maths question difficulty.</p>
     </div>
-    <button id="startBtn" class="primary start">게임 시작</button>
-    <p class="hint" data-i18n="help">일반 모드 10문제 · 스피드 모드 무제한</p>
+    <button id="startBtn" class="primary start">Start game</button>
+    <p class="hint">Normal: 10 questions · Speed: unlimited</p>
   </section>
 
   <section id="game" class="stack hidden">
     <div class="panel stats">
-      <div><small data-i18n="progress">문제</small><strong id="progress">1 / 10</strong></div>
-      <div><small data-i18n="score">점수</small><strong id="score">0</strong></div>
-      <div id="timerBox"><small data-i18n="time">남은 시간</small><strong id="timer">10</strong></div>
+      <div><small>Question</small><strong id="progress">1 / 10</strong></div>
+      <div><small>Score</small><strong id="score">0</strong></div>
+      <div id="timerBox"><small>Time left</small><strong id="timer">10</strong></div>
     </div>
     <div id="timerBar" class="bar"><div id="timerFill"></div></div>
     <div id="adjustPanel" class="adjust-row compact-adjust hidden">
-      <button id="easier" class="secondary" data-i18n="easier">더 쉽게</button>
-      <button id="harder" class="secondary" data-i18n="harder">더 어렵게</button>
+      <button id="easier" class="secondary">Easier</button>
+      <button id="harder" class="secondary">Harder</button>
     </div>
     <div class="panel question-panel">
-      <small id="strandName">수와 연산</small>
+      <small id="strandName">Number</small>
       <div id="question" class="question">7 + 5 = ?</div>
     </div>
     <div id="choices" class="choices"></div>
     <div id="feedback" class="panel hidden" aria-live="polite"></div>
-    <div class="two">
-      <button id="pauseBtn" class="secondary hidden">일시정지</button>
-      <button id="exitBtn" class="secondary">그만하기</button>
-      <button id="nextBtn" class="primary" disabled>다음 문제</button>
+    <div class="two game-controls">
+      <button id="pauseBtn" class="secondary hidden">Pause</button>
+      <button id="nextBtn" class="primary" disabled>Next question</button>
+      <button id="exitBtn" class="secondary">Quit</button>
     </div>
   </section>
 
   <section id="result" class="panel stack hidden">
-    <h2 data-i18n="result">게임 종료!</h2>
+    <h2>Game over!</h2>
     <div id="finalScore" class="final-score">0 pts</div>
     <p id="resultDetail" class="hint"></p>
-    <button id="againBtn" class="primary">다시 시작</button>
+    <button id="againBtn" class="primary">Play again</button>
   </section>
 </main>
-<script src="app.js?v=2.3.8"></script>
+<script src="app.js?v=2.3.9"></script>
 </body>
 </html>
