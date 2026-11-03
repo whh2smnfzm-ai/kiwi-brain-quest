@@ -1,5 +1,5 @@
 {
-  "version": "2.3.9",
+  "version": "2.4.0",
   "updated": "2026-11-03",
-  "notes": "English-only interface, next-question control in speed mode, line-by-line solutions, red final-three-second countdown and audible countdown beeps."
+  "notes": "Fix pause during answer feedback, separate answer and solution panels at question text size, enforce readable speed difficulty buttons, improve countdown beep threshold handling, add visual geometry prompts, stop speed-mode fallback/repetition, and align Year 1–5 statistics with curriculum (mean introduced in Year 6)."
 }
