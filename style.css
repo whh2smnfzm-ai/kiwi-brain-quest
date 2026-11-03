@@ -35,4 +35,4 @@ button.secondary{background:#f7faf8}
 footer{text-align:center;margin-top:3px}
 @media(max-width:420px){body{padding:calc(env(safe-area-inset-top, 0px) + 30px) 9px calc(env(safe-area-inset-bottom, 0px) + 2px)}.panel{padding:13px}.stack{gap:10px}.three button{padding:8px 4px;font-size:.82rem;white-space:nowrap}.question-panel{min-height:140px;padding:20px 14px}.question{font-size:clamp(1.45rem,6vw,2.2rem);line-height:1.45}.choice{min-height:54px;padding:11px 12px}.top{gap:8px}}
 
-.speed-answer{display:flex;gap:8px}.speed-answer input{min-width:0;flex:1;font:inherit;border:1px solid #cbdad4;border-radius:12px;padding:13px 15px}.speed-answer button{white-space:nowrap}.pause{display:none!important}
+.pause{display:none!important}
