@@ -1,5 +1,5 @@
 {
-  "version": "2.4.0",
-  "updated": "2026-11-03",
-  "notes": "Fix pause during answer feedback, separate answer and solution panels at question text size, enforce readable speed difficulty buttons, improve countdown beep threshold handling, add visual geometry prompts, stop speed-mode fallback/repetition, and align Year 1–5 statistics with curriculum (mean introduced in Year 6)."
+  "version": "2.4.1",
+  "updated": "2026-11-08",
+  "notes": "Read questions aloud automatically in English using device speech synthesis, with a replay button and speech pause/resume support."
 }
