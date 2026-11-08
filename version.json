@@ -1,5 +1,5 @@
 {
-  "version": "2.4.1",
+  "version": "2.4.2",
   "updated": "2026-11-08",
-  "notes": "Read questions aloud automatically in English using device speech synthesis, with a replay button and speech pause/resume support."
+  "notes": "Fixed timer difficulty selection buttons so the selected option is clearly highlighted in green with white text."
 }
