@@ -7,13 +7,13 @@ en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Numbe
 };
 const $tr=k=>i18n.en[k]||k;
 let lang="en",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,seen=new Set(),speechEnabled=true,speechUtterance=null;
-const APP_VERSION="2.4.1";
+const APP_VERSION="2.4.2";
 function compare(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){let d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkVersion(){const badge=document.querySelector(".app-version");if(badge)badge.textContent="v"+APP_VERSION;}
 function updateText(){
 document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=$tr(e.dataset.i18n));
 $("normalBtn").textContent=$tr("normal");$("speedBtn").textContent=$tr("speed");$("startBtn").textContent=$tr("start");$("pauseBtn").textContent=paused?$tr("resume"):$tr("pause");$("exitBtn").textContent=$tr("exit");$("nextBtn").textContent=$tr("next");$("againBtn").textContent=$tr("again");
-document.querySelectorAll("[data-time]").forEach(b=>{b.textContent=$tr(["timerEasy","timerMedium","timerHard"][+b.dataset.time]);b.classList.toggle("primary",+b.dataset.time===timerLevel);});
+document.querySelectorAll("[data-time]").forEach(b=>{b.textContent=$tr(["timerEasy","timerMedium","timerHard"][+b.dataset.time]);b.classList.toggle("primary",+b.dataset.time===timerLevel);b.setAttribute("aria-pressed",String(+b.dataset.time===timerLevel));});
 if(current)renderCurrentText();
 }
 function setMode(m){mode=m;$("normalBtn").classList.toggle("primary",m==="normal");$("speedBtn").classList.toggle("primary",m==="speed");$("timerSettings").classList.toggle("hidden",m!=="speed");}
