@@ -47,3 +47,8 @@ footer{text-align:center;margin-top:3px}
 #adjustPanel button:disabled{color:#53645f!important;-webkit-text-fill-color:#53645f!important;opacity:.7;}
 .feedback-answer,.feedback-solution{background:#f7faf8;border:1px solid #dce8e3;border-radius:13px;padding:13px;margin-top:10px;font-size:var(--question-size,clamp(1.45rem,6vw,2.2rem));line-height:1.5;overflow-wrap:anywhere;}
 .feedback-answer>div{font-weight:800;margin-top:4px}.feedback-solution>div{margin-top:7px}.shape-visual{display:block;width:130px;height:116px;margin:0 auto 10px;overflow:visible}.shape-visual polygon{fill:#d9f1e9;stroke:#147d68;stroke-width:3;stroke-linejoin:round}.data-visual{display:inline-block;text-align:left;background:#f7faf8;border:1px solid #dce8e3;border-radius:12px;padding:10px 14px;margin:0 auto 12px;font-size:clamp(.9rem,3.5vw,1.1rem);line-height:1.6}.question-copy{white-space:pre-line}
+
+/* v2.4.1 question narration */
+.read-question{margin-top:14px;padding:9px 15px;border-radius:999px;background:#e8f5f0;color:#145447;border:1px solid #a8d8c9;font-size:.92rem;font-weight:750;}
+.read-question:active{background:#d5eee5;}
+.read-question:disabled{opacity:.5;}
