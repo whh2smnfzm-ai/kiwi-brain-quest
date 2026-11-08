@@ -52,3 +52,22 @@ footer{text-align:center;margin-top:3px}
 .read-question{margin-top:14px;padding:9px 15px;border-radius:999px;background:#e8f5f0;color:#145447;border:1px solid #a8d8c9;font-size:.92rem;font-weight:750;}
 .read-question:active{background:#d5eee5;}
 .read-question:disabled{opacity:.5;}
+
+
+/* v2.4.2 timer difficulty selected state */
+#timerSettings [data-time]{
+  background:#f7faf8!important;
+  color:#172b28!important;
+  border:1px solid #cbdad4!important;
+  -webkit-text-fill-color:#172b28!important;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+#timerSettings [data-time].primary,
+#timerSettings [data-time][aria-pressed="true"]{
+  background:#16834e!important;
+  border-color:#16834e!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 0 0 2px #16834e26;
+}
+#timerSettings [data-time]:active{filter:brightness(.92);}
