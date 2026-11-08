@@ -1,5 +1,5 @@
 {
-  "version": "2.4.3",
+  "version": "2.4.4",
   "updated": "2026-11-08",
-  "notes": "Prevent the iPhone screen from auto-locking while a game is active using the Screen Wake Lock API; reacquire when returning to the game and release on finish or quit."
+  "notes": "Keep question content within the selected NZ primary year progression, add a sound on/off control for speech and beeps, and reveal the current Speed Mode answer and explanation when Next Question is pressed before answering."
 }
