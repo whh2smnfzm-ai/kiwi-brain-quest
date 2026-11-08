@@ -1,5 +1,5 @@
 {
-  "version": "2.4.2",
+  "version": "2.4.3",
   "updated": "2026-11-08",
-  "notes": "Fixed timer difficulty selection buttons so the selected option is clearly highlighted in green with white text."
+  "notes": "Prevent the iPhone screen from auto-locking while a game is active using the Screen Wake Lock API; reacquire when returning to the game and release on finish or quit."
 }
