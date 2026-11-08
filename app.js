@@ -7,7 +7,21 @@ en:{year:"Choose year",category:"Learning area",all:"Mixed topics",number:"Numbe
 };
 const $tr=k=>i18n.en[k]||k;
 let lang="en",mode="normal",timerLevel=1,questionLevel=1,score=0,answered=0,correct=0,current=null,locked=false,paused=false,remaining=0,deadline=0,tick=null,nextTimer=null,audio=null,seen=new Set(),speechEnabled=true,speechUtterance=null;
-const APP_VERSION="2.4.2";
+let screenWakeLock=null,gameActive=false;
+const APP_VERSION="2.4.3";
+async function keepScreenAwake(){
+if(!gameActive||document.visibilityState!=="visible"||!("wakeLock" in navigator))return;
+try{
+ if(screenWakeLock&&!screenWakeLock.released)return;
+ screenWakeLock=await navigator.wakeLock.request("screen");
+ screenWakeLock.addEventListener("release",()=>{screenWakeLock=null;});
+}catch(err){screenWakeLock=null;console.warn("Screen Wake Lock unavailable:",err);}
+}
+async function allowScreenSleep(){
+gameActive=false;
+if(screenWakeLock){const lock=screenWakeLock;screenWakeLock=null;try{await lock.release();}catch(err){console.warn("Could not release screen wake lock:",err);}}
+}
+document.addEventListener("visibilitychange",()=>{if(gameActive&&document.visibilityState==="visible")keepScreenAwake();});
 function compare(a,b){const x=String(a).split(".").map(Number),y=String(b).split(".").map(Number);for(let i=0;i<Math.max(x.length,y.length);i++){let d=(x[i]||0)-(y[i]||0);if(d)return d;}return 0;}
 async function checkVersion(){const badge=document.querySelector(".app-version");if(badge)badge.textContent="v"+APP_VERSION;}
 function updateText(){
@@ -83,9 +97,9 @@ if(mode==="normal")$("nextBtn").disabled=false;else{answerNextRemainingMs=timedO
 }
 function pause(){if(mode!=="speed"||paused)return;paused=true;if("speechSynthesis" in window)window.speechSynthesis.pause();clearInterval(tick);if(locked){clearTimeout(nextTimer);answerNextRemainingMs=Math.max(0,answerNextDeadline-Date.now());}else{clockRemainingMs=Math.max(0,deadline-Date.now());remaining=Math.max(1,Math.ceil(clockRemainingMs/1000));$("timer").textContent=remaining;$("timer").classList.toggle("danger",clockRemainingMs<=3000);$("timerBar").classList.toggle("danger",clockRemainingMs<=3000);$("timerFill").style.width=(clockRemainingMs/clockTotalMs*100)+"%";}$("pauseBtn").textContent=$tr("resume");}
 function resume(){if(!paused)return;paused=false;if("speechSynthesis" in window)window.speechSynthesis.resume();$("pauseBtn").textContent=$tr("pause");if(locked){nextTimer=setTimeout(()=>nextQ(),answerNextRemainingMs||3000);answerNextRemainingMs=0;}else startClock(clockRemainingMs/1000,true);}
-function finish(){stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("result").classList.remove("hidden");$("finalScore").textContent=score+" pts";let pct=answered?Math.round(correct/answered*100):0;$("resultDetail").textContent=`${$tr("answered")}: ${answered} · ${$tr("correctCount")}: ${correct} · ${$tr("accuracy")}: ${pct}%`;}
-function start(){stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);initAudio();score=answered=correct=0;paused=false;questionLevel=1;buildQueue();$("setup").classList.add("hidden");$("result").classList.add("hidden");$("game").classList.remove("hidden");$("pauseBtn").classList.toggle("hidden",mode!=="speed");$("timerBox").classList.toggle("hidden",mode!=="speed");$("timerBar").classList.toggle("hidden",mode!=="speed");$("adjustPanel").classList.toggle("hidden",mode!=="speed");$("nextBtn").classList.remove("hidden");$("nextBtn").disabled=mode==="normal";$("score").textContent=0;nextQ();}
-function quit(){stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("setup").classList.remove("hidden");paused=false;}
+function finish(){allowScreenSleep();stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("result").classList.remove("hidden");$("finalScore").textContent=score+" pts";let pct=answered?Math.round(correct/answered*100):0;$("resultDetail").textContent=`${$tr("answered")}: ${answered} · ${$tr("correctCount")}: ${correct} · ${$tr("accuracy")}: ${pct}%`;}
+function start(){gameActive=true;keepScreenAwake();stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);initAudio();score=answered=correct=0;paused=false;questionLevel=1;buildQueue();$("setup").classList.add("hidden");$("result").classList.add("hidden");$("game").classList.remove("hidden");$("pauseBtn").classList.toggle("hidden",mode!=="speed");$("timerBox").classList.toggle("hidden",mode!=="speed");$("timerBar").classList.toggle("hidden",mode!=="speed");$("adjustPanel").classList.toggle("hidden",mode!=="speed");$("nextBtn").classList.remove("hidden");$("nextBtn").disabled=mode==="normal";$("score").textContent=0;nextQ();}
+function quit(){allowScreenSleep();stopQuestionSpeech();clearInterval(tick);clearTimeout(nextTimer);$("game").classList.add("hidden");$("setup").classList.remove("hidden");paused=false;}
 
 $("normalBtn").addEventListener("click",()=>setMode("normal"));$("speedBtn").addEventListener("click",()=>setMode("speed"));
 document.querySelectorAll("[data-time]").forEach(b=>b.addEventListener("click",()=>{timerLevel=+b.dataset.time;updateText();}));
